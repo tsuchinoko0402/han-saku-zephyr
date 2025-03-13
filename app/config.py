@@ -10,7 +10,7 @@ class Config:
 # 開発環境設定
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://user:password@db:3306/flask_db'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'mysql+pymysql://root:rootpassword@db:3306/flask_db'
 
 # テスト環境設定
 class TestingConfig(Config):
