@@ -3,12 +3,12 @@ version: '3.8'
 services:
   web:
     build:
-      context: .
-      dockerfile: ${DEVCONTAINER_DOCKERFILE:-Dockerfile}
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
     ports:
       - "8080:5000"
     volumes:
-      - .:/app
+      - ..:/app
     environment:
       - FLASK_APP=wsgi.py
       - FLASK_DEBUG=1
@@ -17,8 +17,8 @@ services:
       - DATABASE_URL=mysql+pymysql://user:password@db:3306/flask_db
     depends_on:
       - db
-    # 明示的にコマンドを指定
-    command: poetry run flask run --host=0.0.0.0 --port=5000
+    # 開発環境用のコマンド
+    command: sleep infinity
 
   db:
     image: mysql:8.0
@@ -32,18 +32,6 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
-
-  migration:
-    build: .
-    command: poetry run flask db upgrade
-    environment:
-      - FLASK_APP=wsgi.py
-      - FLASK_CONFIG=dev
-      - DATABASE_URL=mysql+pymysql://user:password@db:3306/flask_db
-    depends_on:
-      - db
-    volumes:
-      - .:/app
 
 volumes:
   mysql_data:
