@@ -13,8 +13,10 @@ RUN pip install poetry==1.7.1
 
 # 依存関係のコピーとインストール
 COPY pyproject.toml poetry.lock* ./
+
+# Poetryの設定とインストール
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi
+    && poetry install --no-interaction --no-ansi --no-root
 
 # アプリケーションのコピー
 COPY . .
