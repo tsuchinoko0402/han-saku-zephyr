@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_cors import CORS
 import os
 from app.config import config_by_name
 
@@ -18,6 +19,7 @@ def create_app(config_name=None):
         config_name = os.environ.get('FLASK_CONFIG', 'dev')
         
     app = Flask(__name__)
+    CORS(app)
     app.config.from_object(config_by_name[config_name])
     
     # データベースの初期化
