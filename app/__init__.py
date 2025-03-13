@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 from app.config import config_by_name
+from app.commands import db_commands
 
 # データベースの初期化
 db = SQLAlchemy()
@@ -23,6 +24,9 @@ def create_app(config_name=None):
     # データベースの初期化
     db.init_app(app)
     migrate.init_app(app, db)
+
+    # カスタムコマンドを登録
+    db_commands.init_app(app)
     
     # Blueprintsの登録
     # 注意: このimportはcreate_app内で行う必要がある（循環インポート防止）
