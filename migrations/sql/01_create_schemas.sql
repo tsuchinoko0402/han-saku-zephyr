@@ -1,0 +1,3 @@
+-- スキーマの作成
+CREATE SCHEMA IF NOT EXISTS `documents` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE SCHEMA IF NOT EXISTS `auth` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
