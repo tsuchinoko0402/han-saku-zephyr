@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-
-{% block title %}Home - Flask App{% endblock %}
-
-{% block content %}
-<h1>Hello, World!</h1>
-<p>Welcome to my Flask application.</p>
-{% endblock %}
