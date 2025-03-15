@@ -1,3 +1,15 @@
+-- auth スキーマに管理者ユーザーテーブルを作成
+CREATE TABLE `auth`.`manager_users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL COMMENT 'ユーザー名',
+  `password_hash` varchar(255) NOT NULL COMMENT 'ハッシュ化パスワード',
+  `role_name` varchar(100) NOT NULL COMMENT '役務名',
+  `last_login` datetime DEFAULT NULL COMMENT '最終ログイン日時',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理者ユーザーの管理テーブル';
 
 -- ファイルタイプマスターテーブル (documents スキーマ)
 CREATE TABLE `documents`.`file_types` (
@@ -49,16 +61,3 @@ CREATE TABLE `documents`.`file_tags` (
   CONSTRAINT `fk_file_tags_file_id` FOREIGN KEY (`file_id`) REFERENCES `documents`.`files` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_file_tags_tag_id` FOREIGN KEY (`tag_id`) REFERENCES `documents`.`tags` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='ファイルについているタグの情報';
-
--- auth スキーマに管理者ユーザーテーブルを作成
-CREATE TABLE `auth`.`manager_users` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) NOT NULL COMMENT 'ユーザー名',
-  `password_hash` varchar(255) NOT NULL COMMENT 'ハッシュ化パスワード',
-  `role_name` varchar(100) NOT NULL COMMENT '役務名',
-  `last_login` datetime DEFAULT NULL COMMENT '最終ログイン日時',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='管理者ユーザーの管理テーブル';
