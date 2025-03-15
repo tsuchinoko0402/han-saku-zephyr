@@ -12,52 +12,39 @@
 
 ```mermaid
 erDiagram
-  files {
+  "documents.files" {
     int id PK
-    varchar file_name "ファイル名"
-    varchar display_name "表示名"
-    varchar url "URL"
-    int file_type_id FK "ファイル形式"
-    bigint file_size "ファイルサイズ(バイト)"
-    boolean is_template "定型文書か否か"
-    datetime created_at "作成日時"
-    int created_by FK "作成者ID"
-    datetime updated_at "更新日時" 
-    int updated_by FK "更新者ID"
-    datetime deleted_at "削除日時（ソフトデリート用）"
+    varchar file_name
+    varchar url
+    boolean is_template
   }
   
-  file_types {
+  "documents.file_types" {
     int id PK
-    varchar extension "ファイルの拡張子"
-    varchar description "拡張子の説明"
+    varchar extension
   }
   
-  file_tags {
-    int file_id FK "fileのid"
-    int tag_id FK "タグid"
-  }
-  
-  tags {
+  "documents.tags" {
     int id PK
-    varchar name "タグ名"
+    varchar name
   }
   
-  auth.manager_users {
+  "documents.file_tags" {
+    int file_id FK
+    int tag_id FK
+  }
+  
+  "auth.manager_users" {
     int id PK
-    varchar username "ユーザー名"
-    varchar password_hash "ハッシュ化パスワード"
-    varchar role_name "役務名"
-    datetime last_login "最終ログイン日時"
-    datetime created_at "作成日時"
-    datetime updated_at "更新日時"
+    varchar username
+    varchar role_name
   }
   
-  files ||--o{ file_tags : "has"
-  files }|--|| file_types : "has_type"
-  files }|--|| auth.manager_users : "created_by"
-  files }|--|| auth.manager_users : "updated_by"
-  file_tags }|--|| tags : "belongs_to"
+  "documents.files" ||--o{ "documents.file_tags" : "has"
+  "documents.files" }|--|| "documents.file_types"  : "has_type"
+  "documents.files" }|--|| "auth.manager_users" : "created_by"
+  "documents.files" }|--|| "auth.manager_users" : "updated_by"
+  "documents.file_tags" }|--|| "documents.tags" : "belongs_to"
 ```
 
 ## セットアップ方法
@@ -90,3 +77,7 @@ docker-compose run --rm web poetry run pytest
 ## 本番環境
 
 本番環境ではCGIを使用してアプリケーションを起動します。`index.cgi`が起動スクリプトとして機能します。
+
+## ドキュメント
+
+- [技術仕様書](docs/TECHNICAL_SPECIFICATION.md) - アプリケーションの詳細な技術仕様と設計
