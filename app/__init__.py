@@ -32,11 +32,16 @@ def create_app(config_name=None):
     # 注意: このimportはcreate_app内で行う必要がある（循環インポート防止）
     from app.views.main import main_bp
     app.register_blueprint(main_bp)
+
+    # ヘルスチェックモジュールを登録
+    from app.health import init_app as init_health
+    init_health(app)
     
     # デバッグ用にルートを出力
-    print(f"Registered routes:")
-    for rule in app.url_map.iter_rules():
-        print(f"{rule.endpoint}: {rule.rule}")
+    if app.debug:
+        print(f"Registered routes:")
+        for rule in app.url_map.iter_rules():
+            print(f"{rule.endpoint}: {rule.rule}")
     
     return app
 
