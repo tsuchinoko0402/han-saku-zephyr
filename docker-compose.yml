@@ -34,17 +34,5 @@ services:
       - ./db/init:/docker-entrypoint-initdb.d 
     command: --default-authentication-plugin=mysql_native_password
 
-  migration:
-    build: .
-    command: poetry run flask db upgrade
-    environment:
-      - FLASK_APP=wsgi.py
-      - FLASK_CONFIG=dev
-      - DATABASE_URL=mysql+pymysql://user:password@db:3306/flask_db
-    depends_on:
-      - db
-    volumes:
-      - .:/app
-
 volumes:
   mysql_data:
